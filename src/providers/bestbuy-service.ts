@@ -1,18 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import bestbuy from 'bestbuy';
 
-/*
-  Generated class for the BestbuyService provider.
+//This provider is using https://github.com/BestBuyAPIs/bestbuy-sdk-js
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class BestbuyService {
 
-  constructor(public http: Http) {
-    console.log('Hello BestbuyService Provider');
+  BestbuyKey:string = 'wKWGtO3S74GrGnwZcyuybMuy';
+
+  constructor() {
+    
   }
 
+  test() {
+    bestbuy.products('(search=mario)', {show: 'salePrice,name', pageSize: 1})
+      .then(function(data){
+        if (data.total === 0) console.log('No products found');
+        else console.log('Found %d products. First match "%s" is $%d', data.total, data.products[0].name, data.products[0].salePrice);
+      })
+      .catch(function(err){
+        console.warn(err);
+      });
+  }
 }

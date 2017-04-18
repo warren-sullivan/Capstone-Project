@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import walmart from 'walmart';
 
-/*
-  Generated class for the WalmartService provider.
+//This provider is using https://github.com/walmartlabs/walmart-api
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class WalmartService {
 
-  constructor(public http: Http) {
-    console.log('Hello WalmartService Provider');
+  constructor() {
+    
   }
 
+  test() {
+    walmart.getItem(10449075).then(function(item) {
+      console.log(item.product.productAttributes.productName);
+    });
+  }
 }

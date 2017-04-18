@@ -9,11 +9,7 @@ export class AmazonService {
   opHelper:any;
 
   constructor() {
-      this.opHelper = new apac.OperationHelper({
-      awsId:     '[YOUR AWS ID HERE]',
-      awsSecret: '[YOUR AWS SECRET HERE]',
-      assocId:   '[YOUR ASSOCIATE TAG HERE]'
-    });
+    
   }
 
   test() {
