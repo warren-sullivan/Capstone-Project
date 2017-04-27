@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import walmart from 'walmart';
+import Walmart from 'walmart';
 
 //This provider is using https://github.com/walmartlabs/walmart-api
 
@@ -11,8 +11,10 @@ export class WalmartService {
   }
 
   test() {
-    walmart.getItem(10449075).then(function(item) {
-      console.log(item.product.productAttributes.productName);
+    //*
+    Walmart.getItem(10449075).then(function(item) {
+      //console.log(item.product.productAttributes.productName);
     });
+    //*/
   }
 }

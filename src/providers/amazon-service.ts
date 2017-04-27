@@ -1,19 +1,25 @@
 import { Injectable } from '@angular/core';
-import apac from 'apac';
+import Amazon from 'apac';
 
 //This provider is using https://github.com/dmcquay/node-apac
 
 @Injectable()
 export class AmazonService {
 
-  opHelper:any;
+  /*
+  opHelper:any = new Amazon({
+      awsId:     '[YOUR AWS ID HERE]',
+      awsSecret: '[YOUR AWS SECRET HERE]',
+      assocId:   '[YOUR ASSOCIATE TAG HERE]'
+    });
+  */
 
   constructor() {
-    
+
   }
 
   test() {
-    this.opHelper.execute('ItemSearch', {
+    /*this.opHelper.execute('ItemSearch', {
       'SearchIndex': 'Books',
       'Keywords': 'harry potter',
       'ResponseGroup': 'ItemAttributes,Offers'
@@ -23,5 +29,6 @@ export class AmazonService {
     }).catch((err) => {
         console.error("Something went wrong! ", err);
     });
+    */
   }
 }

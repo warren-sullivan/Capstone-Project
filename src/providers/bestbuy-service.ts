@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import bestbuy from 'bestbuy';
+import Bestbuy from 'bestbuy';
 
 //This provider is using https://github.com/BestBuyAPIs/bestbuy-sdk-js
 
@@ -13,13 +13,12 @@ export class BestbuyService {
   }
 
   test() {
-    bestbuy.products('(search=mario)', {show: 'salePrice,name', pageSize: 1})
+    /* bluebird.config is not a function
+    Bestbuy.products('(search=mario)', {show: 'salePrice,name', pageSize: 1})
       .then(function(data){
         if (data.total === 0) console.log('No products found');
         else console.log('Found %d products. First match "%s" is $%d', data.total, data.products[0].name, data.products[0].salePrice);
       })
-      .catch(function(err){
-        console.warn(err);
-      });
+    */
   }
 }

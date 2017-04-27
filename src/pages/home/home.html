@@ -5,13 +5,99 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <ion-card>
+    <ion-card-header>
+      Amazon
+    </ion-card-header>
+    <ion-card-content>
+      <button ion-button (click)="Amazon()">Amazon</button>
+      <div *ngIf=true>
+        <ion-card>
+          <ion-card-content>
+            {{AmazonText}}
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Bestbuy
+    </ion-card-header>
+    <ion-card-content>
+      <button ion-button (click)="Bestbuy()">Bestbuy</button>
+      <div *ngIf=true>
+        <ion-card>
+          <ion-card-content>
+            {{BestbuyText}}
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Ebay
+    </ion-card-header>
+    <ion-card-content>
+      <button ion-button (click)="Ebay()">Ebay</button>
+      <div *ngIf=true>
+        <ion-card>
+          <ion-card-content>
+            {{EbayText}}
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card>
+    <ion-card-header>
+      Walmart
+    </ion-card-header>
+    <ion-card-content>
+      <button ion-button (click)="Walmart()">Walmart</button>
+      <div *ngIf=true>
+        <ion-card>
+          <ion-card-content>
+            {{WalmartText}}
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf=true>
+    <ion-card-header>
+      Newegg
+    </ion-card-header>
+    <ion-card-content>
+      <button ion-button (click)="Newegg()">Newegg</button>
+      <div>
+        <ion-card>
+          <ion-card-content>
+            {{NeweggText}}
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Radioshack
+    </ion-card-header>
+    <ion-card-content>
+      <button ion-button (click)="Radioshack()">Radioshack</button>
+      <div>
+        <ion-card>
+          <ion-card-content>
+            {{RadioshackText}}
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
