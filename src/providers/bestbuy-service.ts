@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import Bestbuy from 'bestbuy';
+//import Bestbuy from 'bestbuy';
 
 //This provider is using https://github.com/BestBuyAPIs/bestbuy-sdk-js
 
@@ -20,5 +20,6 @@ export class BestbuyService {
         else console.log('Found %d products. First match "%s" is $%d', data.total, data.products[0].name, data.products[0].salePrice);
       })
     */
+    return 'Bestbuy';
   }
 }

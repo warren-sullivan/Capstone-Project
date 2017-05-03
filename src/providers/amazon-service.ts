@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import Amazon from 'apac';
+//import Amazon from 'apac';
 
 //This provider is using https://github.com/dmcquay/node-apac
 
@@ -30,5 +30,6 @@ export class AmazonService {
         console.error("Something went wrong! ", err);
     });
     */
+    return 'Amazon';
   }
 }

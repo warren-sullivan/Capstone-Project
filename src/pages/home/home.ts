@@ -29,11 +29,11 @@ export class HomePage {
               private RadioshackService: RadioshackService) {}
 
   Amazon(){
-    this.AmazonService.test();
+    this.AmazonText = this.AmazonService.test();
   }
 
   Bestbuy(){
-    this.BestbuyService.test();
+    this.BestbuyText = this.BestbuyService.test();
   }
 
   Ebay(){
@@ -41,14 +41,15 @@ export class HomePage {
   }
 
   Walmart(){
-    this.WalmartService.test();
+    //let sub = this.WalmartService.test();
+    //sub.subscribe( res => { this.WalmartText = res.login; console.log(res.login) } );
   }
 
   Newegg(){
-
+    this.NeweggText = this.NeweggService.test();
   }
 
   Radioshack(){
-
+    this.RadioshackText = this.RadioshackService.test();
   }
 }
