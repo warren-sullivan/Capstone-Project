@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-//import Bestbuy from 'bestbuy';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-
-//This provider is using https://github.com/BestBuyAPIs/bestbuy-sdk-js
 
 @Injectable()
 export class BestbuyService {

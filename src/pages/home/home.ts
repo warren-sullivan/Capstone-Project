@@ -49,10 +49,10 @@ export class HomePage {
   }
 
   Newegg(){
-
+    this.NeweggText = this.NeweggService.test();
   }
 
   Radioshack(){
-
+    this.RadioshackText = this.RadioshackService.test();
   }
 }

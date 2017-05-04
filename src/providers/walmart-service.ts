@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-//import Walmart from 'walmart';
 import 'rxjs/add/operator/map';
-
-//This provider is using https://github.com/walmartlabs/walmart-api
 
 @Injectable()
 export class WalmartService {

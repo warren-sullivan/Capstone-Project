@@ -8,4 +8,8 @@ export class NeweggService {
     
   }
 
+  test(){
+    return 'Newegg';
+  }
+
 }
