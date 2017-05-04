@@ -29,19 +29,23 @@ export class HomePage {
               private RadioshackService: RadioshackService) {}
 
   Amazon(){
-    this.AmazonService.test();
+    let sub = this.AmazonService.test();
+    sub.subscribe( res => { this.AmazonText = res; console.log(res) } );
   }
 
   Bestbuy(){
-    this.BestbuyService.test();
+    let sub = this.BestbuyService.test();
+    sub.subscribe( res => { this.BestbuyText = res.products[0].name; console.log(res) } );
   }
 
   Ebay(){
-    this.EbayText = this.EbayService.test();
+    let sub = this.EbayService.test();
+    sub.subscribe( res => { this.EbayText = res.ItemArray.Item[2].Title; console.log(res) } );
   }
 
   Walmart(){
-    this.WalmartService.test();
+    let sub = this.WalmartService.test();
+    sub.subscribe( res => { this.WalmartText = res.items[0].name; console.log(res) } );
   }
 
   Newegg(){

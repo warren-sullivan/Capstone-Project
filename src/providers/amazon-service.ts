@@ -1,34 +1,18 @@
 import { Injectable } from '@angular/core';
-import Amazon from 'apac';
-
-//This provider is using https://github.com/dmcquay/node-apac
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AmazonService {
 
-  /*
-  opHelper:any = new Amazon({
-      awsId:     '[YOUR AWS ID HERE]',
-      awsSecret: '[YOUR AWS SECRET HERE]',
-      assocId:   '[YOUR ASSOCIATE TAG HERE]'
-    });
-  */
+  Amazonkey:string = "";
 
-  constructor() {
+  constructor(public http: Http) {
 
   }
 
   test() {
-    /*this.opHelper.execute('ItemSearch', {
-      'SearchIndex': 'Books',
-      'Keywords': 'harry potter',
-      'ResponseGroup': 'ItemAttributes,Offers'
-    }).then((response) => {
-        console.log("Results object: ", response.result);
-        console.log("Raw response body: ", response.responseBody);
-    }).catch((err) => {
-        console.error("Something went wrong! ", err);
-    });
-    */
+    let s = 'http://webservices.amazon.com/onca/xml?Service=AWSECommerceService&AWSAccessKeyId=AKIAIYAGB637UJ55KX3A&Operation=ItemSearch&Keywords=the%20hunger%20games&SearchIndex=Books'
+    return this.http.get(s + this.Amazonkey).map( res => res.json() );
   }
 }

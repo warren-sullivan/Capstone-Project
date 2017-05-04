@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import Bestbuy from 'bestbuy';
+//import Bestbuy from 'bestbuy';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 //This provider is using https://github.com/BestBuyAPIs/bestbuy-sdk-js
 
@@ -8,17 +10,12 @@ export class BestbuyService {
 
   BestbuyKey:string = 'wKWGtO3S74GrGnwZcyuybMuy';
 
-  constructor() {
+  constructor(public http: Http) {
     
   }
 
   test() {
-    /* bluebird.config is not a function
-    Bestbuy.products('(search=mario)', {show: 'salePrice,name', pageSize: 1})
-      .then(function(data){
-        if (data.total === 0) console.log('No products found');
-        else console.log('Found %d products. First match "%s" is $%d', data.total, data.products[0].name, data.products[0].salePrice);
-      })
-    */
+    let s = 'https://api.bestbuy.com/v1/products(categoryPath.name=All Flat-Panel TVs)?show=sku,name,salePrice&sort=salesRankMediumTerm&format=json&apiKey=';
+    return this.http.get(s + this.BestbuyKey).map( res => res.json() );
   }
 }
