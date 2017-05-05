@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 //import { NavController } from 'ionic-angular';
+
 import { AmazonService } from '../../providers/amazon-service';
 import { BestbuyService } from '../../providers/bestbuy-service';
 import { EbayService } from '../../providers/ebay-service';
@@ -14,45 +15,53 @@ import { RadioshackService } from '../../providers/radioshack-service';
 })
 export class HomePage {
 
-  AmazonText : string = "placeholder";
-  BestbuyText : string = "placeholder";
-  EbayText : string = "placeholder";
-  NeweggText : string = "placeholder";
-  WalmartText : string = "placeholder";
-  RadioshackText : string = "placeholder";
+  ItemArray: Item[] = [];
 
-  constructor(private AmazonService: AmazonService,
-              private BestbuyService: BestbuyService,
-              private EbayService: EbayService,
-              private NeweggService: NeweggService,
-              private WalmartService: WalmartService,
-              private RadioshackService: RadioshackService) {}
+  AmazonText: string = "placeholder";
+  BestbuyText: string = "placeholder";
+  EbayText: string = "placeholder";
+  NeweggText: string = "placeholder";
+  WalmartText: string = "placeholder";
+  RadioshackText: string = "placeholder";
+
+  constructor(
+    private AmazonService: AmazonService,
+    private BestbuyService: BestbuyService,
+    private EbayService: EbayService,
+    private NeweggService: NeweggService,
+    private WalmartService: WalmartService,
+    private RadioshackService: RadioshackService
+    ){}
 
   Amazon(){
-    let sub = this.AmazonService.test();
+    let sub = this.AmazonService.service();
     sub.subscribe( res => { this.AmazonText = res; console.log(res) } );
   }
 
-  Bestbuy(){
-    let sub = this.BestbuyService.test();
-    sub.subscribe( res => { this.BestbuyText = res.products[0].name; console.log(res) } );
-  }
+  Bestbuy(){this.BestbuyService.service().subscribe(res => res.products.forEach(item => this.ItemArray.push(this.BestbuyService.parse(item))));}
 
   Ebay(){
-    let sub = this.EbayService.test();
+    let sub = this.EbayService.service();
     sub.subscribe( res => { this.EbayText = res.ItemArray.Item[2].Title; console.log(res) } );
   }
 
   Walmart(){
-    let sub = this.WalmartService.test();
+    let sub = this.WalmartService.service();
     sub.subscribe( res => { this.WalmartText = res.items[0].name; console.log(res) } );
   }
 
   Newegg(){
-    this.NeweggText = this.NeweggService.test();
+    this.NeweggText = this.NeweggService.service();
   }
 
   Radioshack(){
-    this.RadioshackText = this.RadioshackService.test();
+    this.RadioshackText = this.RadioshackService.service();
   }
+}
+
+export interface Item {
+  Title: string,
+  Price: number,
+  ImagePresent: boolean,
+  ImageURL: string,
 }

@@ -4,12 +4,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class NeweggService {
 
-  constructor() {
-    
-  }
+  constructor() { }
 
-  test(){
+  service(){
     return 'Newegg';
   }
-
 }

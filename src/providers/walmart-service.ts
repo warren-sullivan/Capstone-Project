@@ -8,11 +8,9 @@ export class WalmartService {
   key: string = 'vragsyd4cr9escfn6pks3quf';
   product: string = '035000521019';
 
-  constructor(public http: Http) {
-    
-  }
+  constructor(private http: Http) { }
 
-  test() {
+  service() {
     //angular2 enable CORS
     let s: string = 'http://api.walmartlabs.com/v1/items?apiKey=' + this.key + '&upc=' + this.product;
     return this.http.get(s).map( res => res.json() );
