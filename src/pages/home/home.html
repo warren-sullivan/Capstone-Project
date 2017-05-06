@@ -1,23 +1,52 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="logout()">
+        Logout
+      </button>
+    </ion-buttons>
+    <ion-title>Price Compare</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="options()">
+        Options
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+  <ion-card>
+    <ion-card-content>
+      <form (ngSubmit)="getItems()">
+        <ion-item>
+          <ion-input type="search" placeholder="Search" clearInput name="Searchbar" [(ngModel)]="SearchValue"></ion-input>
+          <ion-icon name="search" item-left></ion-icon>
+        </ion-item>
+      </form>
+      <ion-list>
+        <ion-item *ngFor="let item of ItemDisplayList">
+          <ion-avatar *ngIf="item.ImagePresent" item-left>
+            <img src="http://i.imgur.com/3gqzZvL.png">
+          </ion-avatar>
+          <p>{{ item.Title }}</p>
+          <p>{{ item.Price }}</p>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf=false>
   <ion-card>
     <ion-card-header>
       Amazon
     </ion-card-header>
     <ion-card-content>
       <button ion-button (click)="Amazon()">Amazon</button>
-      <div>
         <ion-card>
           <ion-card-content>
             {{AmazonText}}
           </ion-card-content>
         </ion-card>
-      </div>
     </ion-card-content>
   </ion-card>
 
@@ -27,13 +56,11 @@
     </ion-card-header>
     <ion-card-content>
       <button ion-button (click)="Bestbuy()">Bestbuy</button>
-      <div>
         <ion-card>
           <ion-card-content>
             {{BestbuyText}}
           </ion-card-content>
         </ion-card>
-      </div>
     </ion-card-content>
   </ion-card>
 
@@ -43,13 +70,11 @@
     </ion-card-header>
     <ion-card-content>
       <button ion-button (click)="Ebay()">Ebay</button>
-      <div>
         <ion-card>
           <ion-card-content>
             {{EbayText}}
           </ion-card-content>
         </ion-card>
-      </div>
     </ion-card-content>
   </ion-card>
   
@@ -59,17 +84,13 @@
     </ion-card-header>
     <ion-card-content>
       <button ion-button (click)="Walmart()">Walmart</button>
-      <div>
         <ion-card>
           <ion-card-content>
             {{WalmartText}}
           </ion-card-content>
         </ion-card>
-      </div>
     </ion-card-content>
   </ion-card>
-
-  <div *ngIf=false>
 
   <ion-card>
     <ion-card-header>
@@ -77,13 +98,11 @@
     </ion-card-header>
     <ion-card-content>
       <button ion-button (click)="Newegg()">Newegg</button>
-      <div>
         <ion-card>
           <ion-card-content>
             {{NeweggText}}
           </ion-card-content>
         </ion-card>
-      </div>
     </ion-card-content>
   </ion-card>
 
@@ -93,15 +112,14 @@
     </ion-card-header>
     <ion-card-content>
       <button ion-button (click)="Radioshack()">Radioshack</button>
-      <div>
         <ion-card>
           <ion-card-content>
             {{RadioshackText}}
           </ion-card-content>
         </ion-card>
-      </div>
     </ion-card-content>
   </ion-card>
 
   </div>
+
 </ion-content>

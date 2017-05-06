@@ -10,7 +10,9 @@ export class BestbuyService {
 
   constructor(private http: Http) { }
 
-  service() {
+  search(input: string) {
+    //function should take arg from search
+    //let item = "";
     let s = 'https://api.bestbuy.com/v1/products(categoryPath.name=All Flat-Panel TVs)?show=sku,name,salePrice&sort=salesRankMediumTerm&format=json&apiKey=';
     return this.http.get(s + this.BestbuyKey).map( res => res.json() );
   }

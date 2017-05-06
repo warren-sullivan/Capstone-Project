@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-//import { NavController } from 'ionic-angular';
+//import { ModalController, NavController } from 'ionic-angular';
+//import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/rx';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/forkjoin';
+import 'rxjs/add/observable/throw';
 
 import { AmazonService } from '../../providers/amazon-service';
 import { BestbuyService } from '../../providers/bestbuy-service';
@@ -15,14 +20,24 @@ import { RadioshackService } from '../../providers/radioshack-service';
 })
 export class HomePage {
 
-  ItemArray: Item[] = [];
-
+  //to be deleted
   AmazonText: string = "placeholder";
   BestbuyText: string = "placeholder";
   EbayText: string = "placeholder";
   NeweggText: string = "placeholder";
   WalmartText: string = "placeholder";
   RadioshackText: string = "placeholder";
+
+  ItemDisplayList: Item[] = [];
+  ItemArray: Item[] = [];
+  SearchValue: string;
+
+  EnableAmazon: boolean;
+  EnableBestBuy: boolean;
+  EnableEbay: boolean;
+  EnableNewegg: boolean;
+  EnableWalmart: boolean;
+  EnableRadioshack: boolean;
 
   constructor(
     private AmazonService: AmazonService,
@@ -31,32 +46,70 @@ export class HomePage {
     private NeweggService: NeweggService,
     private WalmartService: WalmartService,
     private RadioshackService: RadioshackService
-    ){}
+    ){
+      this.EnableAmazon = false;
+      this.EnableBestBuy = true;
+      this.EnableEbay = true;
+      this.EnableNewegg = false;
+      this.EnableWalmart = true;
+      this.EnableRadioshack = false;
+    }
 
-  Amazon(){
-    let sub = this.AmazonService.service();
-    sub.subscribe( res => { this.AmazonText = res; console.log(res) } );
+/*
+  TODO
+
+  Add support for product images
+  Enable/disable stores via options
+  (optional) Change colors via options
+  Logout popup
+  APIs
+  Modal for product detail+larger image on click
+
+*/
+
+  getItems(){
+    this.ItemArray = [];
+    Observable.forkJoin(
+      this.BestbuyService.search(this.SearchValue).catch(res => Observable.of(undefined)),
+      this.WalmartService.search(this.SearchValue).catch(res => Observable.of(undefined)),
+      this.EbayService.search(this.SearchValue).catch(res => Observable.of(undefined)),
+      this.AmazonService.service().catch(res => Observable.of(undefined))
+      //this.NeweggService.service().catch(res => Observable.of(undefined)),
+      //this.RadioshackService.service().catch(res => Observable.of(undefined))
+    ).subscribe(
+      data => {
+        if(data[0]&&this.EnableBestBuy){data[0].products.forEach(item => this.ItemArray.push(this.BestbuyService.parse(item)))};
+        if(data[1]&&this.EnableWalmart){data[1].items.forEach(item => this.ItemArray.push(this.WalmartService.parse(item)))};
+        if(data[2]&&this.EnableEbay){data[2].ItemArray.Item.forEach(item => this.ItemArray.push(this.EbayService.parse(item)))};
+        if(data[3]&&this.EnableAmazon){data[3]}
+        if(data[4]&&this.EnableNewegg){data[4]}
+        if(data[5]&&this.EnableRadioshack){data[5]}
+        this.ItemDisplayList = this.ItemArray.sort((a, b) => {return a.Price - b.Price});
+      }
+    );
   }
 
-  Bestbuy(){this.BestbuyService.service().subscribe(res => res.products.forEach(item => this.ItemArray.push(this.BestbuyService.parse(item))));}
+  options(){}
 
-  Ebay(){
-    let sub = this.EbayService.service();
-    sub.subscribe( res => { this.EbayText = res.ItemArray.Item[2].Title; console.log(res) } );
-  }
+  logout(){}
 
-  Walmart(){
-    let sub = this.WalmartService.service();
-    sub.subscribe( res => { this.WalmartText = res.items[0].name; console.log(res) } );
-  }
+  //fix query
+  Amazon(){this.AmazonService.service().subscribe( res => { this.AmazonText = res; console.log(res) } );}
 
-  Newegg(){
-    this.NeweggText = this.NeweggService.service();
-  }
+  //to be deleted
+  Bestbuy(){this.BestbuyService.search(this.SearchValue).subscribe(res => res.products.forEach(item => this.ItemArray.push(this.BestbuyService.parse(item))))}
 
-  Radioshack(){
-    this.RadioshackText = this.RadioshackService.service();
-  }
+  //to be deleted
+  Ebay(){this.EbayService.search(this.SearchValue).subscribe(res => res.ItemArray.Item.forEach(item => this.ItemArray.push(this.EbayService.parse(item))))}
+
+  //to be deleted
+  Walmart(){this.WalmartService.search(this.SearchValue).subscribe(res => res.items.forEach(item => this.ItemArray.push(this.WalmartService.parse(item))))}
+
+  //todo
+  Newegg(){this.NeweggText = this.NeweggService.service();}
+
+  //todo
+  Radioshack(){this.RadioshackText = this.RadioshackService.service();}
 }
 
 export interface Item {
