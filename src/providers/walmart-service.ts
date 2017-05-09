@@ -11,8 +11,7 @@ export class WalmartService {
   constructor(private http: Http) { }
 
   search(input: string) {
-    let item: string = 'ipod';
-    let s: string = 'http://api.walmartlabs.com/v1/search?apiKey=' + this.WalmartKey +'&query=' + item;
+    let s: string = 'http://api.walmartlabs.com/v1/search?apiKey=' + this.WalmartKey +'&query=' + input;
     return this.http.get(s).map( res => res.json() );
   }
 
@@ -20,8 +19,8 @@ export class WalmartService {
     let NewItem: Item = {
       Title: Object.name,
       Price: Object.salePrice,
-      ImagePresent: false,
-      ImageURL: undefined
+      ImagePresent: true,
+      ImageURL: Object.thumbnailImage
     }
     return NewItem;
   }

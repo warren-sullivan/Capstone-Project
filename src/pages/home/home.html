@@ -24,9 +24,9 @@
         </ion-item>
       </form>
       <ion-list>
-        <ion-item *ngFor="let item of ItemDisplayList">
+        <ion-item (click)="presentModal(item)" *ngFor="let item of ItemDisplayList">
           <ion-avatar *ngIf="item.ImagePresent" item-left>
-            <img src="http://i.imgur.com/3gqzZvL.png">
+            <img src={{item.ImageURL}}>
           </ion-avatar>
           <p>{{ item.Title }}</p>
           <p>{{ item.Price }}</p>

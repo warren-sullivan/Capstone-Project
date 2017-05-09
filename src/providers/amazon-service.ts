@@ -17,10 +17,10 @@ export class AmazonService {
 
     parse(Object):Item{
     let NewItem: Item = {
-      Title: Object,
-      Price: Object,
+      Title: undefined,
+      Price: undefined,
       ImagePresent: false,
-      ImageURL: Object
+      ImageURL: undefined,
     }
     return NewItem;
   }

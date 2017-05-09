@@ -11,18 +11,19 @@ export class BestbuyService {
   constructor(private http: Http) { }
 
   search(input: string) {
-    //function should take arg from search
-    //let item = "";
-    let s = 'https://api.bestbuy.com/v1/products(categoryPath.name=All Flat-Panel TVs)?show=sku,name,salePrice&sort=salesRankMediumTerm&format=json&apiKey=';
-    return this.http.get(s + this.BestbuyKey).map( res => res.json() );
+    let s = 'https://api.bestbuy.com/v1/products(search=' + input + ')?format=json&show=sku,name,salePrice,thumbnailImage&apiKey=' + this.BestbuyKey;
+    return this.http.get(s).map( res => res.json() );
   }
 
   parse(Object):Item{
+    let imgURL = false;
+    if(Object.thumbnailImage){imgURL=true};
+
     let NewItem: Item = {
       Title: Object.name,
       Price: Object.salePrice,
-      ImagePresent: false,
-      ImageURL: undefined
+      ImagePresent: imgURL,
+      ImageURL: Object.thumbnailImage
     }
     return NewItem;
   }
