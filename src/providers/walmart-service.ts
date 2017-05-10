@@ -16,11 +16,22 @@ export class WalmartService {
   }
 
   parse(Object):Item{
+    let regex: RegExp = /&lt;|\/li&gt;|br&gt;|\/b&gt;|ul&gt;|li&gt;|b&gt;|\/ul&gt;|&quot/g;
+
+    let thumb: boolean = false;
+    if(Object.thumbnailImage){thumb=true};
+    let full: boolean = false;
+    if(Object.largeImage){full=true};
+
     let NewItem: Item = {
       Title: Object.name,
       Price: Object.salePrice,
-      ImagePresent: true,
-      ImageURL: Object.thumbnailImage
+      Description: Object.longDescription.replace(regex, " "),
+      ShopURL: Object.productUrl,
+      Thumbnail: thumb,
+      ThumbURL: Object.thumbnailImage,
+      FullImage: full,
+      FullURL: Object.largeImage
     }
     return NewItem;
   }

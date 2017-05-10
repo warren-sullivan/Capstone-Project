@@ -7,7 +7,7 @@
     </ion-buttons>
     <ion-title>Price Compare</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="options()">
+      <button ion-button (click)="options(enabledShops)">
         Options
       </button>
     </ion-buttons>
@@ -25,8 +25,8 @@
       </form>
       <ion-list>
         <ion-item (click)="presentModal(item)" *ngFor="let item of ItemDisplayList">
-          <ion-avatar *ngIf="item.ImagePresent" item-left>
-            <img src={{item.ImageURL}}>
+          <ion-avatar *ngIf="item.Thumbnail" item-left>
+            <img src={{item.ThumbURL}}>
           </ion-avatar>
           <p>{{ item.Title }}</p>
           <p>{{ item.Price }}</p>
@@ -34,92 +34,4 @@
       </ion-list>
     </ion-card-content>
   </ion-card>
-
-  <div *ngIf=false>
-  <ion-card>
-    <ion-card-header>
-      Amazon
-    </ion-card-header>
-    <ion-card-content>
-      <button ion-button (click)="Amazon()">Amazon</button>
-        <ion-card>
-          <ion-card-content>
-            {{AmazonText}}
-          </ion-card-content>
-        </ion-card>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      Bestbuy
-    </ion-card-header>
-    <ion-card-content>
-      <button ion-button (click)="Bestbuy()">Bestbuy</button>
-        <ion-card>
-          <ion-card-content>
-            {{BestbuyText}}
-          </ion-card-content>
-        </ion-card>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      Ebay
-    </ion-card-header>
-    <ion-card-content>
-      <button ion-button (click)="Ebay()">Ebay</button>
-        <ion-card>
-          <ion-card-content>
-            {{EbayText}}
-          </ion-card-content>
-        </ion-card>
-    </ion-card-content>
-  </ion-card>
-  
-  <ion-card>
-    <ion-card-header>
-      Walmart
-    </ion-card-header>
-    <ion-card-content>
-      <button ion-button (click)="Walmart()">Walmart</button>
-        <ion-card>
-          <ion-card-content>
-            {{WalmartText}}
-          </ion-card-content>
-        </ion-card>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      Newegg
-    </ion-card-header>
-    <ion-card-content>
-      <button ion-button (click)="Newegg()">Newegg</button>
-        <ion-card>
-          <ion-card-content>
-            {{NeweggText}}
-          </ion-card-content>
-        </ion-card>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      Radioshack
-    </ion-card-header>
-    <ion-card-content>
-      <button ion-button (click)="Radioshack()">Radioshack</button>
-        <ion-card>
-          <ion-card-content>
-            {{RadioshackText}}
-          </ion-card-content>
-        </ion-card>
-    </ion-card-content>
-  </ion-card>
-
-  </div>
-
 </ion-content>

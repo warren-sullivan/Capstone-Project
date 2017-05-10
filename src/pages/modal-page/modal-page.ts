@@ -10,13 +10,17 @@ export class ModalPage {
 
   title:string= "";
   price:number = 0;
+  desc:string = "";
+  shop:string = "";
   imageURL:string = "";
 
   constructor(private viewCtrl: ViewController, private navParams: NavParams) {
     let item: Item = navParams.get("item");
     this.title = item.Title;
     this.price = item.Price;
-    if(item.ImagePresent){this.imageURL = item.ImageURL}
+    this.desc = item.Description;
+    this.shop = item.ShopURL;
+    if(item.FullImage){this.imageURL = item.FullURL}
   }
 
   close(){

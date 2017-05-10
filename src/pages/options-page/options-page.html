@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>OptionsPage</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="close()">
+        Close
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label>Amazon</ion-label>
+      <ion-toggle checked={{Amazon}} [(ngModel)]="Amazon"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>BestBuy</ion-label>
+      <ion-toggle checked={{BestBuy}} [(ngModel)]="BestBuy"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Ebay</ion-label>
+      <ion-toggle checked={{Ebay}} [(ngModel)]="Ebay"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Newegg</ion-label>
+      <ion-toggle checked={{Newegg}} [(ngModel)]="Newegg"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Radioshack</ion-label>
+      <ion-toggle checked={{Radioshack}} [(ngModel)]="Radioshack"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Walmart</ion-label>
+      <ion-toggle checked={{Walmart}} [(ngModel)]="Walmart"></ion-toggle>
+    </ion-item>
+  </ion-list>
+</ion-content>

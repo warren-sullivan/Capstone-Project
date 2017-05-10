@@ -6,33 +6,33 @@ import { Item } from '../pages/home/home';
 @Injectable()
 export class EbayService {
 
-  EbayKey:string = "appid=WarrenSu-PriceCom-PRD-269dbd521-5c00d944&";
-
-  URL:string = "http://svcs.ebay.com/services/search/FindingService/v1?";
-  Operation:string = "OPERATION-NAME=findItemsByKeywords";
-  Version:string = "&SERVICE-VERSION=1.0.0";
-  AppID:string = "&SECURITY-APPNAME="+this.EbayKey;
-  Datatype:string = "&RESPONSE-DATA-FORMAT=JSON";
-  Rest:string = "&REST-PAYLOAD";
-  Keywords:string = "&keywords=";
+  EbayKey:string = "WarrenSu-PriceCom-PRD-269dbd521-5c00d944";
 
   constructor(private http: Http) {}
 
   search(input: string){
-    //let s = this.URL+this.Operation+this.Version+this.AppID+this.Datatype+this.Rest+this.Keywords+input;
-    let s = 'http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=WarrenSu-PriceCom-PRD-269dbd521-5c00d944&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=10&keywords='+input;
+    let s = 'http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME='+this.EbayKey+'&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=10&keywords='+input+'&outputSelector=PictureURLSuperSize';
     return this.http.get(s).map( res => res.json() );
   }
 
   parse(Object):Item{
-    let img:boolean = false;
-    if(Object.galleryURL[0]){img=true}
+    let thumb: boolean = false;
+    if(Object.galleryURL){thumb=true};
+    let full: boolean = false;
+    let fullUrl: string = "";
+    if(Object.pictureURLSuperSize){
+      full=true;
+      fullUrl = Object.pictureURLSuperSize[0]};
 
     let NewItem: Item = {
       Title: Object.title[0],
       Price: Object.sellingStatus[0].currentPrice[0].__value__,
-      ImagePresent: img,
-      ImageURL: Object.galleryURL[0]
+      Description: undefined,
+      ShopURL: Object.viewItemURL[0],
+      Thumbnail: thumb,
+      ThumbURL: Object.galleryURL[0],
+      FullImage: full,
+      FullURL: fullUrl
     }
     return NewItem;
   }

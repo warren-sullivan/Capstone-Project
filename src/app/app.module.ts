@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 
 import { HomePage } from '../pages/home/home';
 import { ModalPage } from '../pages/modal-page/modal-page';
+import { OptionsPage } from '../pages/options-page/options-page';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -14,7 +15,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   declarations: [
     MyApp,
     HomePage,
-    ModalPage
+    ModalPage,
+    OptionsPage
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     HomePage,
-    ModalPage
+    ModalPage,
+    OptionsPage
   ],
   providers: [
     StatusBar,

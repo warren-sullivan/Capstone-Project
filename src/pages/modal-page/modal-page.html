@@ -10,7 +10,9 @@
 </ion-header>
 
 <ion-content padding>
-  <p>{{ title }}</p>
-  <p>{{ price }}</p>
-  <p>{{ imageURL }}</p>
+  <h1>Item Name: {{ title }}</h1>
+  <h3>Item Price: ${{ price }}</h3>
+  <h3>Item Description: {{ desc }}</h3>
+  <p>Link to store page: <a href={{shop}}>Buy {{ title }}</a></p>
+  <img src={{imageURL}}>
 </ion-content>

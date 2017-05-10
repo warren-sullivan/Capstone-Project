@@ -19,8 +19,12 @@ export class AmazonService {
     let NewItem: Item = {
       Title: undefined,
       Price: undefined,
-      ImagePresent: false,
-      ImageURL: undefined,
+      Description: undefined,
+      ShopURL: undefined,
+      Thumbnail: false,
+      ThumbURL: undefined,
+      FullImage: undefined,
+      FullURL: undefined
     }
     return NewItem;
   }

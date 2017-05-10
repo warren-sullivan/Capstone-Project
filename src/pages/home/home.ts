@@ -1,46 +1,34 @@
 import { Component } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 
-//import { Observable } from 'rxjs/Observable';
-import { Observable } from 'rxjs/rx';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/forkjoin';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/observable/of';
 
 import { ModalPage } from '../modal-page/modal-page';
+import { OptionsPage } from '../options-page/options-page';
 
 import { AmazonService } from '../../providers/amazon-service';
 import { BestbuyService } from '../../providers/bestbuy-service';
 import { EbayService } from '../../providers/ebay-service';
 import { NeweggService } from '../../providers/newegg-service';
-import { WalmartService } from '../../providers/walmart-service';
 import { RadioshackService } from '../../providers/radioshack-service';
+import { WalmartService } from '../../providers/walmart-service';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [AmazonService, BestbuyService, EbayService, NeweggService, WalmartService, RadioshackService]
+  providers: [AmazonService, BestbuyService, EbayService, NeweggService, RadioshackService, WalmartService]
 })
 export class HomePage {
-
-  //to be deleted
-  AmazonText: string = "placeholder";
-  BestbuyText: string = "placeholder";
-  EbayText: string = "placeholder";
-  NeweggText: string = "placeholder";
-  WalmartText: string = "placeholder";
-  RadioshackText: string = "placeholder";
 
   ItemDisplayList: Item[] = [];
   ItemArray: Item[] = [];
   SearchValue: string;
 
-  EnableAmazon: boolean;
-  EnableBestBuy: boolean;
-  EnableEbay: boolean;
-  EnableNewegg: boolean;
-  EnableWalmart: boolean;
-  EnableRadioshack: boolean;
+  enabledShops: EnabledShops;
 
   constructor(
     private modalCtrl: ModalController,
@@ -48,31 +36,29 @@ export class HomePage {
     private BestbuyService: BestbuyService,
     private EbayService: EbayService,
     private NeweggService: NeweggService,
-    private WalmartService: WalmartService,
-    private RadioshackService: RadioshackService
+    private RadioshackService: RadioshackService,
+    private WalmartService: WalmartService
     ){
-      this.EnableAmazon = false;
-      this.EnableBestBuy = true;
-      this.EnableEbay = true;
-      this.EnableNewegg = false;
-      this.EnableWalmart = true;
-      this.EnableRadioshack = false;
+      this.enabledShops = {
+        EnableAmazon: false,
+        EnableBestBuy: true,
+        EnableEbay: true,
+        EnableNewegg: false,
+        EnableRadioshack: false,
+        EnableWalmart: true
+      }
     }
 
 /*
   TODO
 
-  Add support for product images - in progress!
-  Enable/disable stores via options
+  APIs - still need amazon
+  Error handling - fixing them as I find them
   (optional) Change colors via options
-  Logout popup
-  APIs
-  Modal for product detail+larger image on click
-
+  
 */
 
   getItems(){
-    this.ItemArray = [];
     Observable.forkJoin(
       this.BestbuyService.search(this.SearchValue).catch(res => Observable.of(undefined)),
       this.WalmartService.search(this.SearchValue).catch(res => Observable.of(undefined)),
@@ -82,18 +68,23 @@ export class HomePage {
       //this.RadioshackService.service().catch(res => Observable.of(undefined))
     ).subscribe(
       data => {
-        if(data[0]&&this.EnableBestBuy){data[0].products.forEach(item => this.ItemArray.push(this.BestbuyService.parse(item)))};
-        if(data[1]&&this.EnableWalmart&&data[1].items){data[1].items.forEach(item => this.ItemArray.push(this.WalmartService.parse(item)))};
-        if(data[2]&&this.EnableEbay){data[2].findItemsByKeywordsResponse[0].searchResult[0].item.forEach(item => this.ItemArray.push(this.EbayService.parse(item)))};
-        if(data[3]&&this.EnableAmazon){data[3]}
-        if(data[4]&&this.EnableNewegg){data[4]}
-        if(data[5]&&this.EnableRadioshack){data[5]}
+        this.ItemArray = [];
+        if(data[3]&&this.enabledShops.EnableAmazon){data[3]}
+        if(data[0]&&this.enabledShops.EnableBestBuy){data[0].products.forEach(item => this.ItemArray.push(this.BestbuyService.parse(item)))};
+        if(data[2]&&this.enabledShops.EnableEbay){data[2].findItemsByKeywordsResponse[0].searchResult[0].item.forEach(item => this.ItemArray.push(this.EbayService.parse(item)))};
+        if(data[4]&&this.enabledShops.EnableNewegg){data[4]}
+        if(data[5]&&this.enabledShops.EnableRadioshack){data[5]}
+        if(data[1]&&this.enabledShops.EnableWalmart&&data[1].items){data[1].items.forEach(item => this.ItemArray.push(this.WalmartService.parse(item)))};
         this.ItemDisplayList = this.ItemArray.sort((a, b) => {return a.Price - b.Price});
       }
     );
   }
 
-  options(){}
+  options(shops: EnabledShops){
+    let modal = this.modalCtrl.create(OptionsPage, {shops});
+    modal.present();
+    modal.onDidDismiss(data => this.enabledShops = data);
+  }
 
   logout(){}
 
@@ -101,29 +92,24 @@ export class HomePage {
     let modal = this.modalCtrl.create(ModalPage, {item});
     modal.present();
   }
-
-  //fix query
-  Amazon(){this.AmazonService.service().subscribe( res => { this.AmazonText = res; console.log(res) } );}
-
-  //to be deleted
-  Bestbuy(){this.BestbuyService.search(this.SearchValue).subscribe(res => res.products.forEach(item => this.ItemArray.push(this.BestbuyService.parse(item))))}
-
-  //to be deleted
-  Ebay(){this.EbayService.search(this.SearchValue).subscribe(res => res.ItemArray.Item.forEach(item => this.ItemArray.push(this.EbayService.parse(item))))}
-
-  //to be deleted
-  Walmart(){this.WalmartService.search(this.SearchValue).subscribe(res => res.items.forEach(item => this.ItemArray.push(this.WalmartService.parse(item))))}
-
-  //todo
-  Newegg(){this.NeweggText = this.NeweggService.service();}
-
-  //todo
-  Radioshack(){this.RadioshackText = this.RadioshackService.service();}
 }
 
 export interface Item {
   Title: string,
   Price: number,
-  ImagePresent: boolean,
-  ImageURL: string,
+  Description: string,
+  ShopURL: string,
+  Thumbnail: boolean,
+  ThumbURL: string,
+  FullImage: boolean,
+  FullURL: string
+}
+
+export interface EnabledShops {
+  EnableAmazon: boolean;
+  EnableBestBuy: boolean;
+  EnableEbay: boolean;
+  EnableNewegg: boolean;
+  EnableRadioshack: boolean;
+  EnableWalmart: boolean;
 }
