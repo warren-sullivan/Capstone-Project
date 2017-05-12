@@ -19,7 +19,7 @@
     <ion-card-content>
       <form (ngSubmit)="getItems()">
         <ion-item>
-          <ion-input type="search" placeholder="Search" clearInput name="Searchbar" [(ngModel)]="SearchValue"></ion-input>
+          <ion-searchbar type="text" [(ngModel)]="SearchValue" name="SearchValue" debounce="1"></ion-searchbar>
           <ion-icon name="search" item-left></ion-icon>
         </ion-item>
       </form>

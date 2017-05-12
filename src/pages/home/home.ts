@@ -16,20 +16,23 @@ import { EbayService } from '../../providers/ebay-service';
 import { NeweggService } from '../../providers/newegg-service';
 import { WalmartService } from '../../providers/walmart-service';
 
+import { Keyboard } from '@ionic-native/keyboard';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [AmazonService, BestbuyService, EbayService, NeweggService, WalmartService]
+  providers: [AmazonService, BestbuyService, EbayService, NeweggService, WalmartService, Keyboard]
 })
 export class HomePage {
 
   ItemDisplayList: Item[] = [];
   ItemArray: Item[] = [];
-  SearchValue: string;
+  SearchValue: string = "";
 
   enabledShops: EnabledShops;
 
   constructor(
+    private keyboard: Keyboard,
     private modalCtrl: ModalController,
     private AmazonService: AmazonService,
     private BestbuyService: BestbuyService,
@@ -47,6 +50,7 @@ export class HomePage {
   }
 
   getItems() {
+    this.keyboard.close();
     Observable.forkJoin(
       this.BestbuyService.search(this.SearchValue).catch(res => Observable.of(undefined)),
       this.WalmartService.search(this.SearchValue).catch(res => Observable.of(undefined)),
