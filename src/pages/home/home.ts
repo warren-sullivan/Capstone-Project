@@ -14,13 +14,12 @@ import { AmazonService } from '../../providers/amazon-service';
 import { BestbuyService } from '../../providers/bestbuy-service';
 import { EbayService } from '../../providers/ebay-service';
 import { NeweggService } from '../../providers/newegg-service';
-import { RadioshackService } from '../../providers/radioshack-service';
 import { WalmartService } from '../../providers/walmart-service';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [AmazonService, BestbuyService, EbayService, NeweggService, RadioshackService, WalmartService]
+  providers: [AmazonService, BestbuyService, EbayService, NeweggService, WalmartService]
 })
 export class HomePage {
 
@@ -36,60 +35,47 @@ export class HomePage {
     private BestbuyService: BestbuyService,
     private EbayService: EbayService,
     private NeweggService: NeweggService,
-    private RadioshackService: RadioshackService,
     private WalmartService: WalmartService
-    ){
-      this.enabledShops = {
-        EnableAmazon: false,
-        EnableBestBuy: true,
-        EnableEbay: true,
-        EnableNewegg: false,
-        EnableRadioshack: false,
-        EnableWalmart: true
-      }
+  ) {
+    this.enabledShops = {
+      EnableAmazon: false,
+      EnableBestBuy: true,
+      EnableEbay: true,
+      EnableNewegg: false,
+      EnableWalmart: true
     }
+  }
 
-/*
-  TODO
-
-  APIs - still need amazon
-  Error handling - fixing them as I find them
-  (optional) Change colors via options
-  
-*/
-
-  getItems(){
+  getItems() {
     Observable.forkJoin(
       this.BestbuyService.search(this.SearchValue).catch(res => Observable.of(undefined)),
       this.WalmartService.search(this.SearchValue).catch(res => Observable.of(undefined)),
       this.EbayService.search(this.SearchValue).catch(res => Observable.of(undefined)),
       //this.AmazonService.service().catch(res => Observable.of(undefined))
-      //this.NeweggService.service().catch(res => Observable.of(undefined)),
-      //this.RadioshackService.service().catch(res => Observable.of(undefined))
+      //this.NeweggService.service().catch(res => Observable.of(undefined))
     ).subscribe(
       data => {
         this.ItemArray = [];
-        if(data[3]&&this.enabledShops.EnableAmazon){data[3]}
-        if(data[0]&&this.enabledShops.EnableBestBuy){data[0].products.forEach(item => this.ItemArray.push(this.BestbuyService.parse(item)))};
-        if(data[2]&&this.enabledShops.EnableEbay){data[2].findItemsByKeywordsResponse[0].searchResult[0].item.forEach(item => this.ItemArray.push(this.EbayService.parse(item)))};
-        if(data[4]&&this.enabledShops.EnableNewegg){data[4]}
-        if(data[5]&&this.enabledShops.EnableRadioshack){data[5]}
-        if(data[1]&&this.enabledShops.EnableWalmart&&data[1].items){data[1].items.forEach(item => this.ItemArray.push(this.WalmartService.parse(item)))};
-        this.ItemDisplayList = this.ItemArray.sort((a, b) => {return a.Price - b.Price});
+        if (data[3] && this.enabledShops.EnableAmazon) { data[3] }
+        if (data[0] && this.enabledShops.EnableBestBuy) { data[0].products.forEach(item => this.ItemArray.push(this.BestbuyService.parse(item))) };
+        if (data[2] && this.enabledShops.EnableEbay && data[2].findItemsByKeywordsResponse[0].searchResult[0].item) { data[2].findItemsByKeywordsResponse[0].searchResult[0].item.forEach(item => this.ItemArray.push(this.EbayService.parse(item))) };
+        if (data[4] && this.enabledShops.EnableNewegg) { data[4] }
+        if (data[1] && this.enabledShops.EnableWalmart && data[1].items) { data[1].items.forEach(item => this.ItemArray.push(this.WalmartService.parse(item))) };
+        this.ItemDisplayList = this.ItemArray.sort((a, b) => { return a.Price - b.Price });
       }
-    );
+      );
   }
 
-  options(shops: EnabledShops){
-    let modal = this.modalCtrl.create(OptionsPage, {shops});
+  options(shops: EnabledShops) {
+    let modal = this.modalCtrl.create(OptionsPage, { shops });
     modal.present();
     modal.onDidDismiss(data => this.enabledShops = data);
   }
 
-  logout(){}
+  logout() { }
 
   presentModal(item: Item) {
-    let modal = this.modalCtrl.create(ModalPage, {item});
+    let modal = this.modalCtrl.create(ModalPage, { item });
     modal.present();
   }
 }
@@ -110,6 +96,5 @@ export interface EnabledShops {
   EnableBestBuy: boolean;
   EnableEbay: boolean;
   EnableNewegg: boolean;
-  EnableRadioshack: boolean;
   EnableWalmart: boolean;
 }

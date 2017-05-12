@@ -12,7 +12,6 @@ export class OptionsPage {
   BestBuy: boolean;
   Ebay: boolean;
   Newegg: boolean;
-  Radioshack: boolean;
   Walmart: boolean;
 
   constructor(private viewCtrl: ViewController, private navParams: NavParams) {
@@ -21,7 +20,6 @@ export class OptionsPage {
     this.BestBuy = shops.EnableBestBuy;
     this.Ebay = shops.EnableEbay;
     this.Newegg = shops.EnableNewegg;
-    this.Radioshack = shops.EnableRadioshack
     this.Walmart = shops.EnableWalmart;
   }
 
@@ -31,8 +29,7 @@ export class OptionsPage {
       EnableBestBuy: this.BestBuy,
       EnableEbay: this.Ebay,
       EnableNewegg: this.Newegg,
-      EnableWalmart: this.Walmart,
-      EnableRadioshack: this.Radioshack
+      EnableWalmart: this.Walmart
     }
     this.viewCtrl.dismiss(shops);
   }

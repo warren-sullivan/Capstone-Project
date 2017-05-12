@@ -11,17 +11,17 @@ export class WalmartService {
   constructor(private http: Http) { }
 
   search(input: string) {
-    let s: string = 'http://api.walmartlabs.com/v1/search?apiKey=' + this.WalmartKey +'&query=' + input;
-    return this.http.get(s).map( res => res.json() );
+    let s: string = 'http://api.walmartlabs.com/v1/search?apiKey=' + this.WalmartKey + '&query=' + input;
+    return this.http.get(s).map(res => res.json());
   }
 
-  parse(Object):Item{
-    let regex: RegExp = /&lt;|\/li&gt;|br&gt;|\/b&gt;|ul&gt;|li&gt;|b&gt;|\/ul&gt;|&quot/g;
+  parse(Object): Item {
+    let regex: RegExp = /&quot;|\/*([lub][rli4p])*&[gl][t];|\/*[pb1u]*&[gl][t];/g;
 
     let thumb: boolean = false;
-    if(Object.thumbnailImage){thumb=true};
+    if (Object.thumbnailImage) { thumb = true };
     let full: boolean = false;
-    if(Object.largeImage){full=true};
+    if (Object.largeImage) { full = true };
 
     let NewItem: Item = {
       Title: Object.name,

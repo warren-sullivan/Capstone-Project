@@ -6,34 +6,41 @@ import { Item } from '../pages/home/home';
 @Injectable()
 export class EbayService {
 
-  EbayKey:string = "WarrenSu-PriceCom-PRD-269dbd521-5c00d944";
+  EbayKey: string = "WarrenSu-PriceCom-PRD-269dbd521-5c00d944";
 
-  constructor(private http: Http) {}
+  constructor(private http: Http) { }
 
-  search(input: string){
-    let s = 'http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME='+this.EbayKey+'&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=10&keywords='+input+'&outputSelector=PictureURLSuperSize';
-    return this.http.get(s).map( res => res.json() );
+  search(input: string) {
+    let s = 'http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=' + this.EbayKey + '&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=10&keywords=' + input + '&outputSelector=PictureURLSuperSize';
+    return this.http.get(s).map(res => res.json());
   }
 
-  parse(Object):Item{
+  parse(Object): Item {
     let thumb: boolean = false;
-    if(Object.galleryURL){thumb=true};
+    let thumbUrl: string = "";
+    if (Object.galleryURL) {
+      thumb = true
+      thumbUrl = Object.galleryURL[0]
+    };
+
     let full: boolean = false;
     let fullUrl: string = "";
-    if(Object.pictureURLSuperSize){
-      full=true;
-      fullUrl = Object.pictureURLSuperSize[0]};
+    if (Object.pictureURLSuperSize) {
+      full = true;
+      fullUrl = Object.pictureURLSuperSize[0]
+    };
 
     let NewItem: Item = {
       Title: Object.title[0],
       Price: Object.sellingStatus[0].currentPrice[0].__value__,
-      Description: undefined,
+      Description: "description unavailiable",
       ShopURL: Object.viewItemURL[0],
       Thumbnail: thumb,
-      ThumbURL: Object.galleryURL[0],
+      ThumbURL: thumbUrl,
       FullImage: full,
       FullURL: fullUrl
     }
+
     return NewItem;
   }
 }
